@@ -2,7 +2,7 @@ name: Deploy Astro to VPS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
@@ -36,8 +36,8 @@ jobs:
 
       - name: Upload build to VPS
         run: |
-          rsync -avz --delete dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/ubuntu/docker/nmclauncher-site/
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519" dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/ubuntu/docker/nmclauncher-site/
 
       - name: Restart Docker Compose
         run: |
-          ssh vps "cd /home/ubuntu/docker/nmclauncher-site && docker compose down && docker compose up -d --build"
+          ssh -o StrictHostKeyChecking=no vps "cd /home/ubuntu/docker/nmclauncher-site && docker compose down && docker compose up -d --build"
