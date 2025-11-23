@@ -1,0 +1,23 @@
+.nav {
+  display: grid;
+  gap: var(--space-medium);
+  margin-top: var(--space-large);
+  padding-left: var(--space-large);
+  padding-right: var(--space-large);
+}
+
+.nav__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-medium);
+  justify-content: center;
+}
+
+@media(min-width: 64em) {
+
+  .nav {
+    padding-left: var(--space-xx-large);
+    padding-right: var(--space-xx-large);
+  }
+
+}

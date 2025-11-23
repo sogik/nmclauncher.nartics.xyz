@@ -1,0 +1,339 @@
+---
+// Aquí importamos tus estilos CSS para que Astro los procese y minimice
+import "../styles/reset.css";
+import "../styles/root.css";
+import "../styles/fonts.css";
+import "../styles/elements.css";
+import "../styles/button.css";
+import "../styles/footer.css";
+import "../styles/header.css";
+import "../styles/main.css";
+import "../styles/nav.css";
+import "../styles/pre.css";
+import "../styles/workstations.css";
+// Nota: notification.css lo borramos antes, así que no lo incluyo.
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.png" />
+    <meta name="description" content="DRM-free Prism Launcher fork" />
+
+    <meta property="og:site_name" content="NMCLauncher" />
+    <meta property="og:title" content="NMCLauncher" />
+    <meta property="og:description" content="DRM-free Prism Launcher fork" />
+    <meta property="og:image" content="/images/opengraph.png" />
+    <meta property="og:url" content="https://omarchy.org" />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+
+    <style is:global>
+      /* Pega aquí los estilos CSS personalizados del <style> de tu index.html anterior */
+      /* He puesto is:global para que afecten a todo el sitio */
+
+      :root {
+        --brand-orange: #f97316;
+        --brand-orange-dark: #ea580c;
+        --bg-main: #0a0a0a;
+        --text-main: #f3f4f6;
+        --card-border: #333;
+        --card-bg: rgba(255, 255, 255, 0.02);
+        --button-hover-bg: rgba(249, 115, 22, 0.05);
+      }
+
+      [data-theme="light"] {
+        --bg-main: #ffffff;
+        --text-main: #171717;
+        --card-border: #e5e7eb;
+        --card-bg: #f9fafb;
+        --button-hover-bg: rgba(249, 115, 22, 0.1);
+      }
+
+      body {
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        font-family: "Outfit", sans-serif;
+        font-weight: 400;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+        position: relative;
+      }
+
+      .footer p {
+        color: var(--text-main);
+      }
+
+      .notification {
+        background-color: var(--brand-orange) !important;
+        border-bottom: 1px solid var(--brand-orange-dark) !important;
+        text-align: center;
+        padding: 12px;
+        font-weight: 800;
+        font-size: 0.95rem;
+        position: relative;
+        z-index: 100;
+        letter-spacing: 0.5px;
+      }
+
+      .notification a {
+        color: #000 !important;
+        text-decoration: none;
+      }
+      .notification a:hover {
+        text-decoration: underline;
+        color: #000 !important;
+      }
+
+      #theme-toggle {
+        position: absolute;
+        top: 50px;
+        right: 30px;
+        background: transparent;
+        border: 1px solid var(--card-border);
+        color: var(--text-main);
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+      #theme-toggle:hover {
+        border-color: var(--brand-orange);
+        color: var(--brand-orange);
+        background-color: var(--button-hover-bg);
+      }
+      #theme-toggle svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+      }
+
+      .logo-img {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        display: inline-block;
+      }
+
+      .nav__buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .nav__buttons .button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        background: transparent;
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        color: var(--text-main);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-weight: 600;
+        font-family: "Outfit", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+      }
+      .nav__buttons .button:hover {
+        border-color: var(--brand-orange);
+        color: var(--brand-orange);
+        background: var(--button-hover-bg);
+      }
+
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+      .dl-card {
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 30px 20px;
+        text-align: center;
+        background-color: var(--card-bg);
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 380px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      .dl-card:hover {
+        border-color: var(--brand-orange);
+        transform: translateY(-6px);
+        box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.2);
+        background-color: var(--button-hover-bg);
+      }
+      .dl-card:hover .icon-svg-platform {
+        fill: var(--brand-orange);
+        opacity: 1;
+      }
+
+      .dl-card.recommended {
+        border: 2px solid var(--brand-orange);
+        background-color: rgba(249, 115, 22, 0.08);
+        box-shadow: 0 0 25px rgba(249, 115, 22, 0.15);
+      }
+      [data-theme="light"] .dl-card.recommended {
+        background-color: rgba(249, 115, 22, 0.15);
+      }
+
+      .badge-rec {
+        display: none;
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--brand-orange);
+        color: #000;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+      .dl-card.recommended .badge-rec {
+        display: block;
+      }
+
+      .icon-wrapper {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        color: inherit;
+      }
+      .icon-svg-platform {
+        width: 56px;
+        height: 56px;
+        fill: currentColor;
+        opacity: 0.7;
+        transition:
+          fill 0.3s,
+          opacity 0.3s;
+      }
+
+      .dl-title {
+        font-size: 1.6rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+      .dl-info {
+        font-size: 0.95rem;
+        opacity: 0.8;
+        line-height: 1.6;
+        flex-grow: 1;
+        margin-bottom: 20px;
+      }
+      .dl-info strong {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        opacity: 1;
+        color: var(--text-main);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: auto;
+        justify-content: center;
+      }
+      .btn-dl {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 10px;
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: inherit;
+        transition: all 0.2s;
+        cursor: pointer;
+        white-space: nowrap;
+        max-width: 150px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: "Outfit", sans-serif;
+      }
+      .btn-dl svg {
+        width: 18px;
+        height: 18px;
+      }
+      .btn-dl:hover {
+        color: var(--brand-orange);
+        border-color: var(--brand-orange);
+        background-color: rgba(249, 115, 22, 0.1);
+      }
+
+      .recommended .btn-dl {
+        border-color: var(--brand-orange);
+        background: rgba(249, 115, 22, 0.2);
+      }
+      .recommended .btn-dl:hover {
+        background-color: var(--brand-orange);
+        color: black;
+        box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+      .icon-dl {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+
+      .footer__buttons a {
+        color: var(--text-main);
+        transition: color 0.3s;
+        display: inline-block;
+      }
+      .footer__buttons a:hover {
+        color: var(--brand-orange);
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
