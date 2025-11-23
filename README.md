@@ -1,4 +1,4 @@
-# NMCLauncher-site
+# Website for NMCLauncher
 
 <https://nmclauncher.nartics.xyz>
 
