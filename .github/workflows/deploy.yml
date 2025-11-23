@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Build Astro
-        run: npm run build
+        run: npm install && npm run build
 
       - name: Setup SSH
         run: |
@@ -36,8 +36,8 @@ jobs:
 
       - name: Upload build to VPS
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519" dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/ubuntu/docker/nmclauncher-site/
+          rsync -avz -e ssh dist/ vps:/home/${{ secrets.VPS_USER }}/docker/nmclauncher-site/dist/
 
       - name: Restart Docker Compose
         run: |
-          ssh -o StrictHostKeyChecking=no vps "cd /home/ubuntu/docker/nmclauncher-site && sudo docker compose down && sudo docker compose up -d --build"
+          ssh vps "cd /home/${{ secrets.VPS_USER }}/docker/nmclauncher-site && sudo docker compose down && sudo docker compose up -d --build"
