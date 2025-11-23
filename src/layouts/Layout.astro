@@ -1,5 +1,5 @@
 ---
-// Aquí importamos tus estilos CSS para que Astro los procese y minimice
+import SEO from "../components/SEO.astro";
 import "../styles/reset.css";
 import "../styles/root.css";
 import "../styles/fonts.css";
@@ -11,32 +11,37 @@ import "../styles/main.css";
 import "../styles/nav.css";
 import "../styles/pre.css";
 import "../styles/workstations.css";
-// Nota: notification.css lo borramos antes, así que no lo incluyo.
 
 interface Props {
-  title: string;
+  title?: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title = "NMCLauncher - DRM-free Prism Launcher Fork",
+  description = "NMCLauncher is a free, open-source Minecraft launcher. A DRM-free fork of Prism Launcher with enhanced features for Windows, macOS, and Linux.",
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/images/favicon.png" />
-    <meta name="description" content="DRM-free Prism Launcher fork" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta property="og:site_name" content="NMCLauncher" />
-    <meta property="og:title" content="NMCLauncher" />
-    <meta property="og:description" content="DRM-free Prism Launcher fork" />
-    <meta property="og:image" content="/images/opengraph.png" />
-    <meta property="og:url" content="https://omarchy.org" />
-    <meta property="og:type" content="website" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
 
+    <!-- SEO Component -->
+    <SEO title={title} description={description} />
+
+    <!-- Preconnect to external domains for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.github.com" />
+
+    <!-- Google Fonts with optimized loading -->
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap"
       rel="stylesheet"
@@ -45,9 +50,6 @@ const { title } = Astro.props;
     <title>{title}</title>
 
     <style is:global>
-      /* Pega aquí los estilos CSS personalizados del <style> de tu index.html anterior */
-      /* He puesto is:global para que afecten a todo el sitio */
-
       :root {
         --brand-orange: #f97316;
         --brand-orange-dark: #ea580c;

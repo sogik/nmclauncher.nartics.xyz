@@ -1,0 +1,74 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  canonical?: string;
+  keywords?: string;
+}
+
+const {
+  title = "NMCLauncher - DRM-free Prism Launcher Fork",
+  description = "NMCLauncher is a free, open-source Minecraft launcher. A DRM-free fork of Prism Launcher with enhanced features for Windows, macOS, and Linux.",
+  image = "/og-image.png",
+  type = "website",
+  canonical = "https://nmclauncher.nartics.xyz",
+  keywords = "Minecraft launcher, NMCLauncher, Prism Launcher, DRM-free, open source, Windows, macOS, Linux, Minecraft",
+} = Astro.props;
+
+const siteUrl = "https://nmclauncher.nartics.xyz";
+const fullImageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
+const canonicalUrl = canonical || Astro.url.href;
+
+// JSON-LD Structured Data for Software Application
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "NMCLauncher",
+  applicationCategory: "GameApplication",
+  operatingSystem: "Windows, macOS, Linux",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  description: description,
+  url: siteUrl,
+  downloadUrl: "https://github.com/sogik/NMCLauncher/releases",
+  softwareVersion: "Latest",
+  author: {
+    "@type": "Person",
+    name: "sogik",
+    url: "https://x.com/sogikz",
+  },
+  license: "https://github.com/sogik/NMCLauncher/blob/main/LICENSE",
+};
+---
+
+<!-- Primary Meta Tags -->
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="sogik" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullImageUrl} />
+<meta property="og:site_name" content="NMCLauncher" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={fullImageUrl} />
+<meta name="twitter:creator" content="@sogikz" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
